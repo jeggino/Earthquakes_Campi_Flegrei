@@ -178,8 +178,8 @@ with tab2:
 with tab3:
   st.pydeck_chart(pydeck_obj=r_HexagonLayer, use_container_width=True)
 
-with tab4:
-  st.pydeck_chart(pydeck_obj=r_ScatterplotLayer, use_container_width=True)
+# with tab4:
+#   st.pydeck_chart(pydeck_obj=r_ScatterplotLayer, use_container_width=True)
 
 with tab5:
   st.plotly_chart(fig, use_container_width=True)
