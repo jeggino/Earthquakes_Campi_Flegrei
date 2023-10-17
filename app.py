@@ -30,13 +30,13 @@ def get_data():
     'Select a range of magnitude values',
     df_raw.Magnitude.min(), df_raw.Magnitude.max(), (df_raw.Magnitude.min(), df_raw.Magnitude.max())
   )
-  MAGNITUDE = (df_raw.Magnitude>=magnitude_0,df_raw.Magnitude<=magnitude_1)
+  MAGNITUDE = (df_raw.Magnitude>=magnitude_0 & df_raw.Magnitude<=magnitude_1)
 
   deep_0, deep_1 = st.slider(
     'Select a range of deepness values',
-    df_raw["Depth/Km"].min(), df_raw["Depth/Km"].max(), (df_raw["Depth/Km"].min(), df_raw["Depth/Km"].min())
+    df_raw["Depth/Km"].min(), df_raw["Depth/Km"].max(), (df_raw["Depth/Km"].min(), df_raw["Depth/Km"].max())
   )
-  DEEP = (df_raw["Depth/Km"]>=deep_0,df_raw["Depth/Km"]<=deep_1)
+  DEEP = (df_raw["Depth/Km"]>=deep_0 & df_raw["Depth/Km"]<=deep_1)
   
   df_fun = df_raw[(df_raw.EventLocationName=="Campi Flegrei") & MAGNITUDE & DEEP]
   
