@@ -44,4 +44,13 @@ view_state = pdk.ViewState(latitude=df.Latitude.mean(), longitude=df.Longitude.m
 # Render
 r = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip={"text": "Number of earthquakes: {cellCount}"})
 
-st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+
+tab1, tab2, tab3 = st.tabs(["Cat", "Dog", "Owl"])
+
+with tab1:
+  st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+
+with tabs:
+  st.table(data=df)
+  
+
