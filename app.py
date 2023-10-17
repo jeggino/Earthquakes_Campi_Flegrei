@@ -50,7 +50,6 @@ ScreenGridLayer = pdk.Layer(
 # Render
 r_ScreenGridLayer = pdk.Deck(layers=[ScreenGridLayer], initial_view_state=view_state, tooltip={"text": "Number of earthquakes: {cellCount}"})
 
-
 HeatmapLayer = pdk.Layer(
     "HeatmapLayer",
     data=df,
@@ -62,13 +61,32 @@ HeatmapLayer = pdk.Layer(
 # Render
 r_HeatmapLayer = pdk.Deck(layers=[HeatmapLayer], initial_view_state=view_state)
 
+# Define a layer to display on a map
+HexagonLayer = pdk.Layer(
+    "HexagonLayer",
+    df,
+    opacity=0.7,
+    get_position=["Longitude","Latitude"],
+    auto_highlight=True,
+    elevation_scale=10,
+    pickable=True,
+    elevation_range=[0, 300],
+    extruded=True,
+    coverage=1,
+    radius=200,
+) 
+
+# Render
+r_HexagonLayer = pdk.Deck(layers=[HexagonLayer], initial_view_state=view_state,tooltip={"text": "Number of earthquakes: {colorValue}"})
+
+
 tab1, tab2, tab3 = st.tabs(["Cat", "Dog", "Owl"])
 
 with tab1:
   st.pydeck_chart(pydeck_obj=r_ScreenGridLayer, use_container_width=True)
 
 with tab2:
-  st.table(data=df.drop("geometry",axis=1))
+  st.pydeck_chart(pydeck_obj=r_HeatmapLayer, use_container_width=True)
 
 with tab3:
-  st.pydeck_chart(pydeck_obj=r_HeatmapLayer, use_container_width=True)
+  st.pydeck_chart(pydeck_obj=r_HexagonLayer, use_container_width=True)
