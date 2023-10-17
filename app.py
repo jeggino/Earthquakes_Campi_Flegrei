@@ -158,7 +158,6 @@ fig.update_layout(
     font_family="fantasy",
     font_size=13,
     hoverlabel=dict(font_size=12),
-    title={"font":dict(size=28),"font_color":"yellow"},
     sliders=[{"currentvalue":{"prefix": "","font_size":14,},
               "font_size":12,
               }]
