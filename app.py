@@ -5,6 +5,8 @@ from dateutil.relativedelta import relativedelta
 import geopandas as gpd
 import pydeck as pdk
 import seaborn as sns
+import plotly.express as px
+import plotly.graph_objects as go
 
 
 # @st.cache_data(experimental_allow_widgets=True)  # 👈 Set the parameter
@@ -126,7 +128,45 @@ ScatterplotLayer = pdk.Layer(
 r_ScatterplotLayer = pdk.Deck(layers=[ScatterplotLayer], initial_view_state=view_state,
             tooltip={"text": "Date: {Time} \n Magnitude: {Magnitude} \n Depth (Km): {Depth/Km}"})
 
-tab1, tab2, tab3, tab4 = st.tabs(["ScreenGrid", "Heatmap", "Hexagon", "Scatterplot"])
+
+df["date"] = pd.to_datetime(df.Time).dt.date
+
+fig = px.scatter_mapbox(
+    df,
+    opacity=0.8,
+    lat="Latitude",
+    lon="Longitude",
+    zoom=11,
+    color="Magnitude",
+    size="Depth/Km",
+    animation_frame="date",
+    range_color=(0,5),
+    color_continuous_scale="ylorrd",
+    hover_name="date",
+    hover_data={
+                "Depth/Km":True,
+                "Longitude":False,
+                "date":False,
+                "Latitude":False},
+    template="plotly_dark",
+    title="- Earthquakes in the Campi Flegrei region -",
+    
+)
+
+
+fig.update_layout(
+    mapbox_style='carto-darkmatter',
+    font_family="fantasy",
+    font_size=13,
+    hoverlabel=dict(font_size=12),
+    title={"font":dict(size=28),"font_color":"yellow"},
+    sliders=[{"currentvalue":{"prefix": "","font_size":14,},
+              "font_size":12,
+              }]
+)
+
+
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["ScreenGrid", "Heatmap", "Hexagon", "Scatterplot", "Timelapse"])
 
 with tab1:
   st.pydeck_chart(pydeck_obj=r_ScreenGridLayer, use_container_width=True)
@@ -139,5 +179,8 @@ with tab3:
 
 with tab4:
   st.pydeck_chart(pydeck_obj=r_ScatterplotLayer, use_container_width=True)
+
+with tab5:
+  st.plotly_chart(fig, use_container_width=True)
 
 
