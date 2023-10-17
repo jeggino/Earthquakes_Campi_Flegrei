@@ -50,7 +50,7 @@ tab1, tab2, tab3 = st.tabs(["Cat", "Dog", "Owl"])
 with tab1:
   st.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
-with tabs:
+with tab2:
   st.table(data=df)
   
 
