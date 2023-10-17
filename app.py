@@ -34,8 +34,11 @@ def get_data():
 
 df = get_data()
 
+# Set the viewport location
+view_state = pdk.ViewState(latitude=df.Latitude.mean(), longitude=df.Longitude.mean(), zoom=11, bearing=0, pitch=0)
+
 # Define a layer to display on a map
-layer = pdk.Layer(
+ScreenGridLayer = pdk.Layer(
     "ScreenGridLayer",
     df,
     pickable=True,
@@ -44,17 +47,28 @@ layer = pdk.Layer(
     get_position=["Longitude","Latitude"],
 )
 
-# Set the viewport location
-view_state = pdk.ViewState(latitude=df.Latitude.mean(), longitude=df.Longitude.mean(), zoom=11, bearing=0, pitch=0)
+# Render
+r_ScreenGridLayer = pdk.Deck(layers=[ScreenGridLayer], initial_view_state=view_state, tooltip={"text": "Number of earthquakes: {cellCount}"})
+
+
+HeatmapLayer = pdk.Layer(
+    "HeatmapLayer",
+    data=df,
+    opacity=1,
+    threshold=0.75,
+    get_position=["Longitude","Latitude"],
+)
 
 # Render
-r = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip={"text": "Number of earthquakes: {cellCount}"})
-
+r_HeatmapLayer = pdk.Deck(layers=[HeatmapLayer], initial_view_state=view_state)
 
 tab1, tab2, tab3 = st.tabs(["Cat", "Dog", "Owl"])
 
 with tab1:
-  st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+  st.pydeck_chart(pydeck_obj=r_ScreenGridLayer, use_container_width=True)
 
 with tab2:
   st.table(data=df.drop("geometry",axis=1))
+
+with tab3:
+  st.pydeck_chart(pydeck_obj=r_HeatmapLayer, use_container_width=True)
