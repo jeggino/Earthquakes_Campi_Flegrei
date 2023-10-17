@@ -21,7 +21,7 @@ def get_data():
   )
   
   try:
-  df_raw = pd.read_csv(f"https://webservices.ingv.it/fdsnws/event/1/query?starttime={str(d[0].strftime('%Y-%m-%d'))}T00%3A00%3A00&endtime={str(d[1].strftime('%Y-%m-%d'))}T23%3A59%3A59&minmag=-1&maxmag=10&mindepth=-10&maxdepth=1000&minlat=35&maxlat=49&minlon=5&maxlon=20&minversion=100&orderby=time-asc&format=text&limit=10000",sep="|")
+    df_raw = pd.read_csv(f"https://webservices.ingv.it/fdsnws/event/1/query?starttime={str(d[0].strftime('%Y-%m-%d'))}T00%3A00%3A00&endtime={str(d[1].strftime('%Y-%m-%d'))}T23%3A59%3A59&minmag=-1&maxmag=10&mindepth=-10&maxdepth=1000&minlat=35&maxlat=49&minlon=5&maxlon=20&minversion=100&orderby=time-asc&format=text&limit=10000",sep="|")
 
   except:
     st.spinner('Wait for it...')
