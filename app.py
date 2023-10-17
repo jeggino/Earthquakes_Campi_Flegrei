@@ -94,8 +94,11 @@ HexagonLayer = pdk.Layer(
     radius=200,
 ) 
 
+# Set the viewport location
+view_state_HexagonLayer = pdk.ViewState(latitude=df.Latitude.mean(), longitude=df.Longitude.mean(), zoom=13, pitch=40.5, bearing=-27.36,)
+
 # Render
-r_HexagonLayer = pdk.Deck(layers=[HexagonLayer], initial_view_state=view_state,tooltip={"text": "Number of earthquakes: {colorValue}"})
+r_HexagonLayer = pdk.Deck(layers=[HexagonLayer], initial_view_state=view_state_HexagonLayer,tooltip={"text": "Number of earthquakes: {colorValue}"})
 
 
 
