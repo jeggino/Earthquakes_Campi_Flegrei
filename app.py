@@ -4,6 +4,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta 
 import geopandas as gpd
 import pydeck as pdk
+import seaborn as sns
 
 
 # @st.cache_data(experimental_allow_widgets=True)  # 👈 Set the parameter
@@ -92,7 +93,40 @@ HexagonLayer = pdk.Layer(
 r_HexagonLayer = pdk.Deck(layers=[HexagonLayer], initial_view_state=view_state,tooltip={"text": "Number of earthquakes: {colorValue}"})
 
 
-tab1, tab2, tab3 = st.tabs(["Cat", "Dog", "Owl"])
+
+bins = 3
+
+color_cat = dict(zip(sorted(pd.cut(df.Magnitude,bins=bins,include_lowest=True).unique().tolist()),
+                     list(sns.color_palette("YlOrRd",n_colors=bins,))
+                    )
+                )
+
+df["color_cat"] = pd.cut(df.Magnitude,bins=bins,include_lowest=True).tolist()
+df["color_cat"] = df["color_cat"].map(color_cat)
+df["color_cat"] = df["color_cat"].apply(lambda x: [round(i * 255) for i in x])
+
+# Define a layer to display on a map
+ScatterplotLayer = pdk.Layer(
+    "ScatterplotLayer",
+    df,
+    pickable=True,
+    opacity=0.6,
+    stroked=False,
+    filled=True,
+    radius_scale=50,
+    radius_min_pixels=1,
+    radius_max_pixels=100000,
+    get_position=["Longitude","Latitude"],
+    get_radius="Magnitude",
+    get_fill_color="color_cat",
+)
+
+
+# Render
+r_ScatterplotLayer = pdk.Deck(layers=[ScatterplotLayer], initial_view_state=view_state,
+            tooltip={"text": "Date: {Time} \n Magnitude: {Magnitude} \n Depth (Km): {Depth/Km}"})
+
+tab1, tab2, tab3, tab4 = st.tabs(["Cat", "Dog", "Owl", "Scatterplot"])
 
 with tab1:
   st.pydeck_chart(pydeck_obj=r_ScreenGridLayer, use_container_width=True)
@@ -102,3 +136,8 @@ with tab2:
 
 with tab3:
   st.pydeck_chart(pydeck_obj=r_HexagonLayer, use_container_width=True)
+
+with tab4:
+  st.pydeck_chart(pydeck_obj=r_ScatterplotLayer, use_container_width=True)
+
+
