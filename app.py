@@ -10,10 +10,9 @@ import pydeck as pdk
 # def get_data():
 inputs_months =st.number_input("Number of months", min_value=1, max_value=3, value="min", step=1, label_visibility="visible")
 today = datetime.now()
-st.write(today)
 last_month_date = today + relativedelta(months=-inputs_months)
 
-df_raw = pd.read_csv(f"https://webservices.ingv.it/fdsnws/event/1/query?starttime={str(last_month_date)}T00%3A00%3A00&endtime={str(today)}T23%3A59%3A59&minmag=-1&maxmag=10&mindepth=-10&maxdepth=1000&minlat=35&maxlat=49&minlon=5&maxlon=20&minversion=100&orderby=time-asc&format=text&limit=10000",sep="|")
+df_raw = pd.read_csv(f"https://webservices.ingv.it/fdsnws/event/1/query?starttime={str(last_month_date.strftime('%Y-%m-%d'))}T00%3A00%3A00&endtime={str(today.strftime('%Y-%m-%d'))}T23%3A59%3A59&minmag=-1&maxmag=10&mindepth=-10&maxdepth=1000&minlat=35&maxlat=49&minlon=5&maxlon=20&minversion=100&orderby=time-asc&format=text&limit=10000",sep="|")
 df_fun = df_raw[df_raw.EventLocationName=="Campi Flegrei"][['Time', 'Latitude', 'Longitude', 'Depth/Km','Magnitude','EventLocationName']]
 
 gdf = gpd.GeoDataFrame(df_fun, geometry=gpd.points_from_xy(df_fun.Longitude, df_fun.Latitude), crs="EPSG:4326")    
