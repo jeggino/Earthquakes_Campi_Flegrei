@@ -167,7 +167,7 @@ fig.update_layout(
 )
 
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["ScreenGrid", "Heatmap", "Hexagon", "Scatterplot", "Timelapse"])
+tab1, tab2, tab3,  tab5 = st.tabs(["ScreenGrid", "Heatmap", "Hexagon", "Timelapse"])
 
 with tab1:
   st.pydeck_chart(pydeck_obj=r_ScreenGridLayer, use_container_width=True)
