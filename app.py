@@ -24,12 +24,24 @@ def get_data():
     df_raw = pd.read_csv(f"https://webservices.ingv.it/fdsnws/event/1/query?starttime={str(d[0].strftime('%Y-%m-%d'))}T00%3A00%3A00&endtime={str(d[1].strftime('%Y-%m-%d'))}T23%3A59%3A59&minmag=-1&maxmag=10&mindepth=-10&maxdepth=1000&minlat=35&maxlat=49&minlon=5&maxlon=20&minversion=100&orderby=time-asc&format=text&limit=10000",sep="|")
 
   except:
-    st.spinner('Wait for it...')
     st.stop()
-    
-  df_fun = df_raw[df_raw.EventLocationName=="Campi Flegrei"][['Time', 'Latitude', 'Longitude', 'Depth/Km','Magnitude','EventLocationName']]
+
+  magnitude_0, magnitude_1 = st.slider(
+    'Select a range of magnitude values',
+    df_raw.Magnitude.min(), df_raw.Magnitude.max(), (df_raw.Magnitude.min(), df_raw.Magnitude.max())
+  )
+  MAGNITUDE = (df_raw.Magnitude>=magnitude_0,df_raw.Magnitude<=magnitude_1)
+
+  deep_0, deep_1 = st.slider(
+    'Select a range of deepness values',
+    df_raw["Depth/Km"].min(), df_raw["Depth/Km"].max(), (df_raw["Depth/Km"].min(), df_raw["Depth/Km"].min())
+  )
+  DEEP = (df_raw["Depth/Km"]>=deep_0,df_raw["Depth/Km"]<=deep_1)
+  
+  df_fun = df_raw[(df_raw.EventLocationName=="Campi Flegrei") & MAGNITUDE & DEEP]
   
   gdf = gpd.GeoDataFrame(df_fun, geometry=gpd.points_from_xy(df_fun.Longitude, df_fun.Latitude), crs="EPSG:4326")    
+  
   return gdf
 
 df = get_data()
