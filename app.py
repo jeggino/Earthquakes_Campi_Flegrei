@@ -15,7 +15,7 @@ def get_data():
     "Select your vacation for next year",
     (today.date(), week.date()),
     max_date.date(),
-    today,
+    today.date(),
     format="MM.DD.YYYY",
   )
   
