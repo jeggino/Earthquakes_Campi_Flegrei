@@ -36,7 +36,7 @@ def get_data():
   MAGNITUDE = (df_raw.Magnitude>=magnitude_0) & (df_raw.Magnitude<=magnitude_1)
 
   deep_0, deep_1 = st.sidebar.slider(
-    'Select a range of deepness values',
+    'Select a range of depths values',
     df_raw["Depth/Km"].min(), df_raw["Depth/Km"].max(), (df_raw["Depth/Km"].min(), df_raw["Depth/Km"].max())
   )
   DEEP = (df_raw["Depth/Km"]>=deep_0) & (df_raw["Depth/Km"]<=deep_1)
