@@ -126,7 +126,7 @@ ScatterplotLayer = pdk.Layer(
 r_ScatterplotLayer = pdk.Deck(layers=[ScatterplotLayer], initial_view_state=view_state,
             tooltip={"text": "Date: {Time} \n Magnitude: {Magnitude} \n Depth (Km): {Depth/Km}"})
 
-tab1, tab2, tab3, tab4 = st.tabs(["Cat", "Dog", "Owl", "Scatterplot"])
+tab1, tab2, tab3, tab4 = st.tabs(["ScreenGrid", "Heatmap", "Hexagon", "Scatterplot"])
 
 with tab1:
   st.pydeck_chart(pydeck_obj=r_ScreenGridLayer, use_container_width=True)
