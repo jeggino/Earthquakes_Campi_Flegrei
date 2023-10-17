@@ -11,7 +11,7 @@ def get_data():
   today = datetime.now()
   week = today + relativedelta(weeks=-1)
   max_date = (today + relativedelta(months=-3))
-  d = st.date_input(
+  d = st.sidebar.date_input(
     "Select your vacation for next year",
     (week.date(),today.date()),
     max_date.date(),
@@ -26,13 +26,13 @@ def get_data():
   except:
     st.stop()
 
-  magnitude_0, magnitude_1 = st.slider(
+  magnitude_0, magnitude_1 = st.sidebar.slider(
     'Select a range of magnitude values',
     df_raw.Magnitude.min(), df_raw.Magnitude.max(), (df_raw.Magnitude.min(), df_raw.Magnitude.max())
   )
   MAGNITUDE = (df_raw.Magnitude>=magnitude_0) & (df_raw.Magnitude<=magnitude_1)
 
-  deep_0, deep_1 = st.slider(
+  deep_0, deep_1 = st.sidebar.slider(
     'Select a range of deepness values',
     df_raw["Depth/Km"].min(), df_raw["Depth/Km"].max(), (df_raw["Depth/Km"].min(), df_raw["Depth/Km"].max())
   )
