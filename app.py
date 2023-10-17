@@ -149,7 +149,6 @@ fig = px.scatter_mapbox(
                 "date":False,
                 "Latitude":False},
     template="plotly_dark",
-    title="- Earthquakes in the Campi Flegrei region -",
     
 )
 
