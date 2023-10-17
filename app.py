@@ -52,5 +52,3 @@ with tab1:
 
 with tab2:
   st.table(data=df.drop("geometry",axis=1)
-  
-
