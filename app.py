@@ -13,7 +13,7 @@ def get_data():
   max_date = (today + relativedelta(months=-3))
   d = st.date_input(
     "Select your vacation for next year",
-    (today.date(), week.date()),
+    (week.date(),today.date()),
     max_date.date(),
     today.date(),
     
