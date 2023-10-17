@@ -25,6 +25,8 @@ def get_data():
 
   except:
     st.spinner('Wait for it...')
+    st.stop()
+    
   df_fun = df_raw[df_raw.EventLocationName=="Campi Flegrei"][['Time', 'Latitude', 'Longitude', 'Depth/Km','Magnitude','EventLocationName']]
   
   gdf = gpd.GeoDataFrame(df_fun, geometry=gpd.points_from_xy(df_fun.Longitude, df_fun.Latitude), crs="EPSG:4326")    
