@@ -51,6 +51,6 @@ with tab1:
   st.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
 with tab2:
-  st.table(data=df)
+  st.table(data=df.drop("geometry",axis=1)
   
 
