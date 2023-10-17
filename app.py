@@ -6,7 +6,7 @@ import geopandas as gpd
 import pydeck as pdk
 
 
-# @st.cache_data(experimental_allow_widgets=True)  # 👈 Set the parameter
+@st.cache_data(experimental_allow_widgets=True)  # 👈 Set the parameter
 def get_data():
   today = datetime.now()
   week = today + relativedelta(weeks=-1)
