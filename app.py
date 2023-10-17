@@ -48,7 +48,7 @@ def get_data():
   return gdf
 
 body = "https://travelnostop.com/wp-content/uploads/2014/02/muqoy_campiflegrei-610x366.jpg"
-st.markdown(body, unsafe_allow_html=False, *, help=None)
+st.markdown(body, unsafe_allow_html=False, help=None)
 
 df = get_data()
 
