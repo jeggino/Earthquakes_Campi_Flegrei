@@ -16,7 +16,7 @@ today = datetime.now()
 week = today + relativedelta(weeks=-1)
 max_date = (today + relativedelta(months=-3))
 d = st.sidebar.date_input(
-  "Select your vacation for next year",
+  "'Select a range",
   (week.date(),today.date()),
   max_date.date(),
   today.date(),
