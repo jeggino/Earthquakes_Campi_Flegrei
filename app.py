@@ -184,6 +184,9 @@ with tab3:
 # with tab4:
 #   st.pydeck_chart(pydeck_obj=r_ScatterplotLayer, use_container_width=True)
 
+if st.button("update"):
+    st.rerun()
+
 with tab5:
   st.plotly_chart(fig, use_container_width=True)
 
