@@ -9,6 +9,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
+img = "https://travelnostop.com/wp-content/uploads/2014/02/muqoy_campiflegrei-610x366.jpg"
+st.sidebar.image(img)
+
 today = datetime.now()
 week = today + relativedelta(weeks=-1)
 max_date = (today + relativedelta(months=-3))
@@ -42,9 +45,6 @@ DEEP = (df_raw["Depth/Km"]>=deep_0) & (df_raw["Depth/Km"]<=deep_1)
 df_fun = df_raw.loc[(df_raw.EventLocationName=="Campi Flegrei") & MAGNITUDE & DEEP]
 
 gdf = gpd.GeoDataFrame(df_fun, geometry=gpd.points_from_xy(df_fun.Longitude, df_fun.Latitude), crs="EPSG:4326")    
-
-body = "https://travelnostop.com/wp-content/uploads/2014/02/muqoy_campiflegrei-610x366.jpg"
-st.sidebar.image(body)
 
 df = gdf
 
