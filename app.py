@@ -46,7 +46,7 @@ gdf = gpd.GeoDataFrame(df_fun, geometry=gpd.points_from_xy(df_fun.Longitude, df_
 body = "https://travelnostop.com/wp-content/uploads/2014/02/muqoy_campiflegrei-610x366.jpg"
 st.sidebar.image(body)
 
-df = get_data()
+df = gdf
 
 # Set the viewport location
 view_state = pdk.ViewState(latitude=df.Latitude.mean(), longitude=df.Longitude.mean(), zoom=11, bearing=0, pitch=0)
